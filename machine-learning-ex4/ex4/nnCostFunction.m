@@ -62,11 +62,17 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+X = [ones(m, 1) X];
+a = [ones(1, m) ; sigmoid(Theta1*X')];
+h_theta = sigmoid(Theta2*a);
+%[val, p] = max(h_theta', [], 2);
 
-
-
-
-
+for IndexY = 1:m
+	yi = zeros(num_labels,1);
+	yi(y(IndexY)) = 1;
+	DeltaJ = -(yi'*log(h_theta(:,IndexY))+(ones(1,num_labels)-yi')*log(1-h_theta(:,IndexY)))/m;
+	J = J + DeltaJ;
+end
 
 
 
