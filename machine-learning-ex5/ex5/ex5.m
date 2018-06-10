@@ -164,7 +164,7 @@ pause;
 %  lambda to see how the fit and learning curve change.
 %
 
-lambda = 100;
+lambda = 3;
 [theta] = trainLinearReg(X_poly, y, lambda);
 
 % Plot training data and fit
@@ -218,3 +218,41 @@ end
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+%% =========== Part 9: Computing Test Set Error =============
+%  For the best value found for lambda evaluate the test error
+%  on a set that was not used neither to train or cross validate
+
+
+[minVal_Error, index] = min(error_val);
+best_lambda = lambda_vec(index);
+fprintf('\nBest_Lambda=%f\n', best_lambda);
+
+[theta]=trainLinearReg(X_poly, y, best_lambda);
+[TestError, grad_error] = linearRegCostFunction(X_poly_test, ytest, theta, 0);
+fprintf(['TestError=%f ' ...
+		 '\n(this value should be about 3.8599)\n'], TestError);
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
+
+%% =========== Part 10: Learning Curve: Random Examples =============
+%  For the best value found for lambda evaluate the test error
+%  on a set that was not used neither to train or cross validate
+
+m = size(X,1);     % the number of training examples
+r = size(Xval,1);  % the number of validation examples
+niter = 50;
+
+for i = 1:m
+	for j = 1:niter
+	X_train = X_poly(randperm(m)(1:i), :)
+	y_train = y(1:i);
+	[theta] = trainLinearReg(X_train, y_train, lambda);
+	[error_train(i), grad_train] = linearRegCostFunction(X_train, y_train, theta, 0);
+	[error_val(i), grad_val] = linearRegCostFunction(Xval, yval, theta, 0);
+end
+
+
+
+
