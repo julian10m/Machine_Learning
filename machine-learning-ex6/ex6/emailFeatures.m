@@ -48,12 +48,10 @@ x = zeros(n, 1);
 %
 %
 
-
-
-
-
-
-
+for word_ind = 1:length(word_indices)
+	ind_feature = word_indices(word_ind);
+	x(ind_feature) = 1;
+end
 
 % =========================================================================
     
