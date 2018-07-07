@@ -12,13 +12,14 @@ centroids = zeros(K, size(X, 2));
 % Instructions: You should set centroids to randomly chosen examples from
 %               the dataset X
 %
+% create a matrix of only the unique rows
+X_unq = unique(X, 'rows');
 
+% create a random permutation of the rows  
+randidx = randperm(size(X_unq, 1));
 
-
-
-
-
-
+% take the first K rows as centroids
+centroids = X_unq(randidx(1:K), :);
 
 % =============================================================
 
